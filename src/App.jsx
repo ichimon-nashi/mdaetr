@@ -23,9 +23,8 @@ function App() {
       .replaceAll(/(<li>)/g,"\r\n");
     const additionalRemarkToBeCopied = document.querySelector("#textAreaData").innerHTML
     const combinedText = ccomDataToBeCopied + "\n\n" + bulletinDataToBeCopied + "\n\n" + `三、其他：\n` + additionalRemarkToBeCopied
-    console.log(combinedText)
     setTextToCopy(combinedText);
-  }, [])
+  })
 
   const getCCOMQuestion = () => {
     const randomCCOMQuestion = [];
