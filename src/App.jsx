@@ -19,7 +19,17 @@ function App() {
   }, [])
 
   const getCCOMQuestion = () => {
+    const randomCCOMQuestion = [];
 
+    for (let i=0; i<ccomData.length; i++) {
+      if ((formattedMonth >= ccomData[i]["startDate"]) && (formattedMonth <= ccomData[i]["endDate"])) {
+        const randomNumber = Math.floor(Math.random()*(ccomData[i]["questionList"].length));
+        randomCCOMQuestion.push(ccomData[i]["questionList"][randomNumber]);
+        // console.log(`CCOM章節： ${ccomData[i]["chapter"]}`)
+        // console.log(ccomData[i]["questionList"][randomNumber])
+      } 
+    }
+    return <>{`1. 抽問 F2 CCOM Ch.${randomCCOMQuestion}，抽問結果正常。`}</>;
   }
 
   const newestBulletin = bulletinData
@@ -34,11 +44,16 @@ function App() {
   const handleCopyButton = () => {
     setCopyStatus(true);
     setTimeout(() => setCopyStatus(false), 3000); // Reset status after 2 seconds
-    // const copiedData = document.querySelector("#copyBulletinData").innerHTML
-    //   .replaceAll(/(<p>|<\/p>|<\/li>)/g,"")
-    //   .replaceAll(/(<li>)/g,"\r\n");
-    // console.log(copiedData);
-    // setTextToCopy(copiedData);
+    const ccomDataToBeCopied = document.querySelector("#ccomData").innerHTML
+      .replaceAll(/(<h2>)/g,"")
+      .replaceAll(/(<\/h2>)/g,"\r\n");
+    const bulletinDataToBeCopied = document.querySelector("#bulletinData").innerHTML
+      .replaceAll(/(<h2>|<\/h2>|<\/li>)/g,"")
+      .replaceAll(/(<li>)/g,"\r\n");
+    const additionalRemarkToBeCopied = document.querySelector("#textAreaData").innerHTML
+    const combinedText = ccomDataToBeCopied + "\n\n" + bulletinDataToBeCopied + "\n\n" + `三、其他：\n` + additionalRemarkToBeCopied
+    console.log(combinedText)
+    setTextToCopy(combinedText);
   };
 
   return (
@@ -58,24 +73,24 @@ function App() {
       
       <fieldset className='ccom-Container'>
         <legend>CCOM抽問</legend>
-        <h2>一、飛安抽問合格，摘要如下：</h2>
+        <div id="ccomData">
+          <h2>一、飛安抽問合格，摘要如下：</h2>
         
-        {(() => {
-          const randomCCOMQuestion = [];
+          {/* {(() => {
+            const randomCCOMQuestion = [];
+            for (let i=0; i<ccomData.length; i++) {
+              if ((formattedMonth >= ccomData[i]["startDate"]) && (formattedMonth <= ccomData[i]["endDate"])) {
+                const randomNumber = Math.floor(Math.random()*(ccomData[i]["questionList"].length));
+                randomCCOMQuestion.push(ccomData[i]["questionList"][randomNumber]);
+                console.log(`CCOM章節： ${ccomData[i]["chapter"]}`)
+                console.log(ccomData[i]["questionList"][randomNumber])
+              } 
+            }
+            return <div>{`1. 抽問 F2 CCOM Ch.${randomCCOMQuestion}，抽問結果正常。`}</div>;
+          })()} */}
 
-          for (let i=0; i<ccomData.length; i++) {
-            if ((formattedMonth >= ccomData[i]["startDate"]) && (formattedMonth <= ccomData[i]["endDate"])) {
-              const randomNumber = Math.floor(Math.random()*(ccomData[i]["questionList"].length));
-              randomCCOMQuestion.push(ccomData[i]["questionList"][randomNumber]);
-              
-              console.log(`CCOM章節： ${ccomData[i]["chapter"]}`)
-              console.log(ccomData[i]["questionList"][randomNumber])
-            } 
-          }
-
-          return <div>{`1. 抽問 F2 CCOM Ch.${randomCCOMQuestion}，抽問結果正常。`}</div>;
-        })()}
-
+          {(() => getCCOMQuestion())()}
+        </div>
       </fieldset>
 
       <fieldset className='bulletin-Container'>
@@ -91,23 +106,34 @@ function App() {
             onChange={(event) => setNoOfBulletin(event.target.value)}
           />
         </label>
-        <h2>二、公告抽問合格，摘要如下:</h2>
-        {newestBulletin}
+        <div id="bulletinData">
+          <h2>二、公告抽問合格，摘要如下:</h2>
+          {newestBulletin}
+        </div>
       </fieldset>
 
       <fieldset className='additionalRemarks-Container'>
         <legend>其他</legend>
-        <h2>三、其他：</h2>
-        <label name="additionalRemark" className="addtionalRemark-label">
-          <input 
+        <div>
+          <h2>三、其他：</h2>
+          {/* <input 
             className="additionalRemark-input" 
             type="text" 
             name="addtionalRemark"
             placeholder='無。' 
             value={additionalRemark} 
             onChange={(event) => setAdditionalRemark(event.target.value)} 
-          />
-        </label>
+          /> */}
+          <textarea
+          id="textAreaData"
+          className="additionalRemark-input" 
+          placeholder='無。' 
+          name="addtionalRemark"
+          value={additionalRemark} 
+          onChange={(event) => setAdditionalRemark(event.target.value)} 
+          >
+          </textarea>
+        </div>
       </fieldset>
 
       <CopyToClipboard text={textToCopy} >

@@ -24,6 +24,10 @@ fieldset {
   margin: 1.5rem 0;
 }
 
+h2 {
+  font-size: 1.4rem;
+}
+
 /* Header Component */
 .header-Container {
   text-align: center;
@@ -92,12 +96,22 @@ fieldset {
 
 /* Bulletin Component */
 .bulletin-input {
-  width: 2.8rem;
-  height: 1.5rem;
+  width: 3rem;
+  height: 1.9rem;
+  margin-left: 0.8rem;
+  font-size: 1rem;
+  text-indent: 0.15rem;
 }
 
 /* Additional Remark Component */
+.additionalRemarks-Container {
+  margin-bottom: 4rem;
+}
 
+.additionalRemark-input {
+  width: 100%;
+  height: 5rem;
+}
 
 /* Copy Button */
 .copyButton {
@@ -106,7 +120,7 @@ fieldset {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 5%;
+  height: 8%;
   background-color: rgba(52, 248, 111, 0.9);
   font-size: 2.2rem;
 }
