@@ -15,7 +15,16 @@ function App() {
   const formattedMonth = moment(startDate).format("MM-DD");
 
   useEffect(() => {
-
+    const ccomDataToBeCopied = document.querySelector("#ccomData").innerHTML
+      .replaceAll(/(<h2>)/g,"")
+      .replaceAll(/(<\/h2>)/g,"\r\n");
+    const bulletinDataToBeCopied = document.querySelector("#bulletinData").innerHTML
+      .replaceAll(/(<h2>|<\/h2>|<\/li>)/g,"")
+      .replaceAll(/(<li>)/g,"\r\n");
+    const additionalRemarkToBeCopied = document.querySelector("#textAreaData").innerHTML
+    const combinedText = ccomDataToBeCopied + "\n\n" + bulletinDataToBeCopied + "\n\n" + `三、其他：\n` + additionalRemarkToBeCopied
+    console.log(combinedText)
+    setTextToCopy(combinedText);
   }, [])
 
   const getCCOMQuestion = () => {
