@@ -57,7 +57,7 @@ N.version="2.30.1";BD(me);N.fn=P;N.min=Rx;N.max=Yx;N.now=Lx;N.utc=Jt;N.unix=uC;N
 `+g+`
 
 三、其他：
-`+_;console.log(h),s(h)},[]);const d=()=>{const y=[];for(let g=0;g<Ua.length;g++)if(c>=Ua[g].startDate&&c<=Ua[g].endDate){const _=Math.floor(Math.random()*Ua[g].questionList.length);y.push(Ua[g].questionList[_])}return ne.jsx(ne.Fragment,{children:`1. 抽問 F2 CCOM Ch.${y}，抽問結果正常。`})},f=cE.filter(y=>N(y.date).isSameOrBefore(e)).slice(-n).map((y,g)=>ne.jsx("li",{children:`${g+1}. ${y.id} : ${y.title}`},`id${y.id}`)),m=()=>{u(!0),setTimeout(()=>u(!1),3e3);const y=document.querySelector("#ccomData").innerHTML.replaceAll(/(<h2>)/g,"").replaceAll(/(<\/h2>)/g,`\r
+`+_;s(h)});const d=()=>{const y=[];for(let g=0;g<Ua.length;g++)if(c>=Ua[g].startDate&&c<=Ua[g].endDate){const _=Math.floor(Math.random()*Ua[g].questionList.length);y.push(Ua[g].questionList[_])}return ne.jsx(ne.Fragment,{children:`1. 抽問 F2 CCOM Ch.${y}，抽問結果正常。`})},f=cE.filter(y=>N(y.date).isSameOrBefore(e)).slice(-n).map((y,g)=>ne.jsx("li",{children:`${g+1}. ${y.id} : ${y.title}`},`id${y.id}`)),m=()=>{u(!0),setTimeout(()=>u(!1),3e3);const y=document.querySelector("#ccomData").innerHTML.replaceAll(/(<h2>)/g,"").replaceAll(/(<\/h2>)/g,`\r
 `),g=document.querySelector("#bulletinData").innerHTML.replaceAll(/(<h2>|<\/h2>|<\/li>)/g,"").replaceAll(/(<li>)/g,`\r
 `),_=document.querySelector("#textAreaData").innerHTML,h=y+`
 
