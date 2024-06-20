@@ -4,6 +4,7 @@ import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { bulletinData, ccomData } from './components/Data';
+import audio from "./assets/hallelujahSound.mp3";
 
 function App() {
   const [ startDate, setStartDate ] = useState(Date.now());
@@ -14,9 +15,12 @@ function App() {
   
   const formattedMonth = moment(startDate).format("MM-DD");
 
+  const hallelujahSound = new Audio(audio)
+  hallelujahSound.volume = 0.4;
+
   useEffect(() => {
     const ccomDataToBeCopied = document.querySelector("#ccomData").innerHTML
-      .replaceAll(/(<h2>)/g,"")
+    .replaceAll(/(<h2>|<p>|<\/p>)/g,"")
       .replaceAll(/(<\/h2>)/g,"\r\n");
     const bulletinDataToBeCopied = document.querySelector("#bulletinData").innerHTML
       .replaceAll(/(<h2>|<\/h2>|<\/li>)/g,"")
@@ -31,14 +35,40 @@ function App() {
 
     for (let i=0; i<ccomData.length; i++) {
       if ((formattedMonth >= ccomData[i]["startDate"]) && (formattedMonth <= ccomData[i]["endDate"])) {
-        const randomNumber = Math.floor(Math.random()*(ccomData[i]["questionList"].length));
-        randomCCOMQuestion.push(ccomData[i]["questionList"][randomNumber]);
-        // console.log(`CCOM章節： ${ccomData[i]["chapter"]}`)
-        // console.log(ccomData[i]["questionList"][randomNumber])
+        if ((ccomData[i]["chapter"] === "6") || (ccomData[i]["chapter"] === "12")) {
+          switch(moment(formattedMonth).format("dddd")) {
+            case "Monday":
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][1]}，抽問結果正常。`);
+              break;
+            case "Tuesday":
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][2]}，抽問結果正常。`);
+                break;
+            case "Wednesday":
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][3]}，抽問結果正常。`);
+              break;
+            case "Thursday":
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][4]}，抽問結果正常。`);
+                break;
+            case "Friday":
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][5]}，抽問結果正常。`);
+              break;
+            case "Saturday":
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][6]}，抽問結果正常。`);
+                break;
+            case "Sunday":
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][7]}，抽問結果正常。`);
+              break;
+          }
+        } else {
+          const randomNumber = Math.floor(Math.random()*(ccomData[i]["questionList"].length));
+          randomCCOMQuestion.push(`1. 抽問 F2 CCOM Ch.${ccomData[i]["questionList"][randomNumber]}，抽問結果正常。`);
+        }
+        
       } 
     }
-    return <>{`1. 抽問 F2 CCOM Ch.${randomCCOMQuestion}，抽問結果正常。`}</>;
+    return <p>{randomCCOMQuestion}</p>;
   }
+
 
   const newestBulletin = bulletinData
     .filter(criteria => moment(criteria.date).isSameOrBefore(startDate))
@@ -52,8 +82,9 @@ function App() {
   const handleCopyButton = () => {
     setCopyStatus(true);
     setTimeout(() => setCopyStatus(false), 3000); // Reset status after 2 seconds
+    
     const ccomDataToBeCopied = document.querySelector("#ccomData").innerHTML
-      .replaceAll(/(<h2>)/g,"")
+      .replaceAll(/(<h2>|<p>|<\/p>)/g,"")
       .replaceAll(/(<\/h2>)/g,"\r\n");
     const bulletinDataToBeCopied = document.querySelector("#bulletinData").innerHTML
       .replaceAll(/(<h2>|<\/h2>|<\/li>)/g,"")
@@ -62,13 +93,15 @@ function App() {
     const combinedText = ccomDataToBeCopied + "\n\n" + bulletinDataToBeCopied + "\n\n" + `三、其他：\n` + additionalRemarkToBeCopied
     console.log(combinedText)
     setTextToCopy(combinedText);
+    hallelujahSound.play();
   };
 
   return (
     <>
       <div className="header-Container">
         <h1 className="title neonText">e-<span className="redNeon neon-flicker">TAHI</span> Report</h1>
-        <small className='versionNo'>v.1.0.0</small>
+        <small className='versionNo'>v.2.1.1</small>
+        <p className="warning">⚠️注意公告vs報到時間⚠️</p>
         <div className='datePicker-container'>
           <DatePicker 
             showIcon

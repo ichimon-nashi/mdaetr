@@ -80,6 +80,10 @@ h2 {
   100% {opacity: 1;}
 }
 
+.warning {
+  letter-spacing: 0.3rem;
+}
+
 .datePicker-container {
   margin: 1rem 0;
 }
@@ -91,6 +95,19 @@ h2 {
   background-color: #505050;
 }
 
+legend {
+  font-size: 1.3rem;
+  letter-spacing: 0.15rem;
+  color: #FFF;
+  text-shadow:
+    0 0 5px #FFF,
+    0 0 10px #FFF,
+    0 0 20px #FFF,
+    0 0 40px rgb(63, 92, 255),
+    0 0 80px rgb(63, 92, 255),
+    0 0 90px rgb(63, 92, 255),
+    0 0 100px rgb(63, 92, 255);
+}
 /* CCOM Component */
 
 
@@ -101,16 +118,21 @@ h2 {
   margin-left: 0.8rem;
   font-size: 1rem;
   text-indent: 0.15rem;
+  margin-top: 1.5rem;
 }
 
+li, p {
+  margin-bottom: 1rem;
+}
 /* Additional Remark Component */
 .additionalRemarks-Container {
-  margin-bottom: 4rem;
+  margin-bottom: 4.5rem;
 }
 
 .additionalRemark-input {
   width: 100%;
   height: 5rem;
+  font-size: 1rem;
 }
 
 /* Copy Button */
@@ -120,11 +142,100 @@ h2 {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 8%;
-  background-color: rgba(52, 248, 111, 0.9);
+  height: 7%;
+  background-color: #17c47c;
+  animation: blink 2s infinite linear;
+  color: white;
   font-size: 2.2rem;
+  border: none;
+  border-radius: 0.5rem 0.5rem 0 0;
+  text-shadow:
+    0 0 5px #FFF,
+    0 0 10px #FFF,
+    0 0 20px #FFF,
+    0 0 40px rgb(63, 92, 255),
+    0 0 80px rgb(63, 92, 255),
+    0 0 90px rgb(63, 92, 255),
+    0 0 100px rgb(63, 92, 255);
+}
+
+@keyframes blink {
+  0%, 100% {
+    background-color: #17c47c;
+    box-shadow:
+      0 0 5px #17c47c,
+      0 0 25px #17c47c,
+      0 0 50px #17c47c,
+      0 0 200px #17c47c;
+  }
+  50% {
+    background-color: #57e6aa;
+    box-shadow:
+      0 0 5px #57e6aa,
+      0 0 25px #57e6aa,
+      0 0 50px #57e6aa,
+      0 0 200px #57e6aa;
+  }
 }
 
 .copyButton.copied {
-  background-color: rgba(248, 186, 52, 0.9);
+  background-color: #ee853f;
+  animation: copiedBlink 3s infinite linear;
+}
+
+@keyframes copiedBlink {
+  0%, 100% {
+    background-color: #ee853f;
+    box-shadow:
+      0 0 5px #ee853f,
+      0 0 25px #ee853f,
+      0 0 50px #ee853f,
+      0 0 200px #ee853f;
+  }
+  50% {
+    background-color: #ffaf46;
+    box-shadow:
+      0 0 5px #ffaf46,
+      0 0 25px #ffaf46,
+      0 0 50px #ffaf46,
+      0 0 200px #ffaf46;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .title {
+    font-size: 5rem;
+  }
+  body {
+    margin: 0 2rem;
+  }
+  legend {
+    font-size: 2rem;
+    font-weight: 500;
+  }
+  label {
+    font-size: 1.2rem;
+  }
+  li, p {
+    line-height: 2rem;
+    font-size: 1.3rem;
+  }
+  .copyButton {
+    position: relative;
+    width: 15%;
+    display: flex;
+    border-radius: 1rem;
+    margin: auto;
+    margin-bottom: 1rem;
+    justify-content: center;
+    align-items: center;
+    height: 4.5rem;
+    background-color: rgba(70, 129, 244, 0.85);
+    color: white;
+    font-size: 2rem;
+    border: none;
+  }
+  textarea {
+    font-size: 1.2rem;
+  }
 }
