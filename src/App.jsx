@@ -116,20 +116,6 @@ function App() {
         <legend>CCOM抽問</legend>
         <div id="ccomData">
           <h2>一、飛安抽問合格，摘要如下：</h2>
-        
-          {/* {(() => {
-            const randomCCOMQuestion = [];
-            for (let i=0; i<ccomData.length; i++) {
-              if ((formattedMonth >= ccomData[i]["startDate"]) && (formattedMonth <= ccomData[i]["endDate"])) {
-                const randomNumber = Math.floor(Math.random()*(ccomData[i]["questionList"].length));
-                randomCCOMQuestion.push(ccomData[i]["questionList"][randomNumber]);
-                console.log(`CCOM章節： ${ccomData[i]["chapter"]}`)
-                console.log(ccomData[i]["questionList"][randomNumber])
-              } 
-            }
-            return <div>{`1. 抽問 F2 CCOM Ch.${randomCCOMQuestion}，抽問結果正常。`}</div>;
-          })()} */}
-
           {(() => getCCOMQuestion())()}
         </div>
       </fieldset>
@@ -157,14 +143,6 @@ function App() {
         <legend>其他</legend>
         <div>
           <h2>三、其他：</h2>
-          {/* <input 
-            className="additionalRemark-input" 
-            type="text" 
-            name="addtionalRemark"
-            placeholder='無。' 
-            value={additionalRemark} 
-            onChange={(event) => setAdditionalRemark(event.target.value)} 
-          /> */}
           <textarea
           id="textAreaData"
           className="additionalRemark-input" 
