@@ -10,10 +10,11 @@ function App() {
   const [ startDate, setStartDate ] = useState(Date.now());
   const [ noOfBulletin, setNoOfBulletin ] = useState(5);
   const [ additionalRemark, setAdditionalRemark ] = useState("1.無。");
-  const [textToCopy, setTextToCopy] = useState('');
-  const [copyStatus, setCopyStatus] = useState(false);
+  const [ textToCopy, setTextToCopy ] = useState('');
+  const [ copyStatus, setCopyStatus ] = useState(false);
   
   const formattedMonth = moment(startDate).format("MM-DD");
+  const dayOfWeek = moment(startDate).format("dddd");
 
   const hallelujahSound = new Audio(audio)
   hallelujahSound.volume = 0.4;
@@ -36,27 +37,34 @@ function App() {
     for (let i=0; i<ccomData.length; i++) {
       if ((formattedMonth >= ccomData[i]["startDate"]) && (formattedMonth <= ccomData[i]["endDate"])) {
         if ((ccomData[i]["chapter"] === "6") || (ccomData[i]["chapter"] === "12")) {
-          switch(moment(formattedMonth).format("dddd")) {
+          switch(dayOfWeek) {
             case "Monday":
-              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][1]}，抽問結果正常。`);
+              console.log(dayOfWeek)
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][0]}，抽問結果正常。`);
               break;
             case "Tuesday":
-              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][2]}，抽問結果正常。`);
+              console.log(dayOfWeek)
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][1]}，抽問結果正常。`);
                 break;
             case "Wednesday":
-              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][3]}，抽問結果正常。`);
+              console.log(dayOfWeek)
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][2]}，抽問結果正常。`);
               break;
             case "Thursday":
-              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][4]}，抽問結果正常。`);
+              console.log(dayOfWeek)
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][3]}，抽問結果正常。`);
                 break;
             case "Friday":
-              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][5]}，抽問結果正常。`);
+              console.log(dayOfWeek)
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][4]}，抽問結果正常。`);
               break;
             case "Saturday":
-              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][6]}，抽問結果正常。`);
+              console.log(dayOfWeek)
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][5]}，抽問結果正常。`);
                 break;
             case "Sunday":
-              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][7]}，抽問結果正常。`);
+              console.log(dayOfWeek)
+              randomCCOMQuestion.push(`1. 依公告抽問飛安暨主題加強宣導月題庫。抽問 F2${ccomData[i]["questionList"][6]}，抽問結果正常。`);
               break;
           }
         } else {
@@ -144,12 +152,12 @@ function App() {
         <div>
           <h2>三、其他：</h2>
           <textarea
-          id="textAreaData"
-          className="additionalRemark-input" 
-          placeholder='無。' 
-          name="addtionalRemark"
-          value={additionalRemark} 
-          onChange={(event) => setAdditionalRemark(event.target.value)} 
+            id="textAreaData"
+            className="additionalRemark-input" 
+            placeholder='無。' 
+            name="addtionalRemark"
+            value={additionalRemark} 
+            onChange={(event) => setAdditionalRemark(event.target.value)} 
           >
           </textarea>
         </div>
