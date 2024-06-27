@@ -108,8 +108,8 @@ function App() {
     <>
       <div className="header-Container">
         <h1 className="title neonText">e-<span className="redNeon neon-flicker">TAHI</span> Report</h1>
-        <small className='versionNo'>v.2.1.1</small>
-        <p className="warning">⚠️注意公告vs報到時間⚠️</p>
+        <small className='versionNo'>v.2.1.3</small>
+        <p className="warning">⚠️留意不複製到任務報到後的公告⚠️</p>
         <div className='datePicker-container'>
           <DatePicker 
             showIcon
