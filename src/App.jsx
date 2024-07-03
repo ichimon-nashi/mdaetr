@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { bulletinData, ccomData } from './components/Data';
+import { additionalRemarkData, bulletinData, ccomData } from './components/Data';
 import audio from "./assets/hallelujahSound.mp3";
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
   
   const formattedMonth = moment(startDate).format("MM-DD");
   const dayOfWeek = moment(startDate).format("dddd");
+  const oneWeekFromStartDate = moment(startDate).subtract(7, "days").format('YYYY-MM-DD')
 
   const hallelujahSound = new Audio(audio)
   hallelujahSound.volume = 0.4;
@@ -26,14 +27,15 @@ function App() {
     const bulletinDataToBeCopied = document.querySelector("#bulletinData").innerHTML
       .replaceAll(/(<h2>|<\/h2>|<\/li>)/g,"")
       .replaceAll(/(<li>)/g,"\r\n");
-    const additionalRemarkToBeCopied = document.querySelector("#textAreaData").innerHTML
-    const combinedText = ccomDataToBeCopied + "\n\n" + bulletinDataToBeCopied + "\n\n" + `三、其他：\n` + additionalRemarkToBeCopied
+      const additionalRemarkToBeCopied = document.querySelector("#textAreaData").innerHTML
+      .replaceAll(/(<h2>|<\/h2>|<\/li>)/g,"")
+      .replaceAll(/(<li>)/g,"\r\n");
+    const combinedText = ccomDataToBeCopied + "\n\n" + bulletinDataToBeCopied + "\n\n" + additionalRemarkToBeCopied
     setTextToCopy(combinedText);
-  })
+  },[startDate, noOfBulletin, additionalRemark])
 
   const getCCOMQuestion = () => {
     const randomCCOMQuestion = [];
-
     for (let i=0; i<ccomData.length; i++) {
       if ((formattedMonth >= ccomData[i]["startDate"]) && (formattedMonth <= ccomData[i]["endDate"])) {
         if ((ccomData[i]["chapter"] === "6") || (ccomData[i]["chapter"] === "12")) {
@@ -71,12 +73,10 @@ function App() {
           const randomNumber = Math.floor(Math.random()*(ccomData[i]["questionList"].length));
           randomCCOMQuestion.push(`1. 抽問 F2 CCOM Ch.${ccomData[i]["questionList"][randomNumber]}，抽問結果正常。`);
         }
-        
       } 
     }
     return <p>{randomCCOMQuestion}</p>;
   }
-
 
   const newestBulletin = bulletinData
     .filter(criteria => moment(criteria.date).isSameOrBefore(startDate))
@@ -87,9 +87,21 @@ function App() {
       )
     });
 
+  const filteredRemarks = additionalRemarkData
+    .filter(criteria1 => moment(criteria1.date).isSameOrBefore(startDate))
+    .filter(criteria2 => moment(criteria2.date).isSameOrAfter(oneWeekFromStartDate))
+    .map((item, index) => {
+      return (
+        <li key={item.message}>
+          {`${index + 1}. ${item.message}`}
+        </li>
+      )
+    })
+
+
   const handleCopyButton = () => {
     setCopyStatus(true);
-    setTimeout(() => setCopyStatus(false), 3000); // Reset status after 2 seconds
+    setTimeout(() => setCopyStatus(false), 3000); // Reset status after 3 seconds
     
     const ccomDataToBeCopied = document.querySelector("#ccomData").innerHTML
       .replaceAll(/(<h2>|<p>|<\/p>)/g,"")
@@ -98,7 +110,9 @@ function App() {
       .replaceAll(/(<h2>|<\/h2>|<\/li>)/g,"")
       .replaceAll(/(<li>)/g,"\r\n");
     const additionalRemarkToBeCopied = document.querySelector("#textAreaData").innerHTML
-    const combinedText = ccomDataToBeCopied + "\n\n" + bulletinDataToBeCopied + "\n\n" + `三、其他：\n` + additionalRemarkToBeCopied
+      .replaceAll(/(<h2>|<\/h2>|<\/li>)/g,"")
+      .replaceAll(/(<li>)/g,"\r\n");
+    const combinedText = ccomDataToBeCopied + "\n\n" + bulletinDataToBeCopied + "\n\n" + additionalRemarkToBeCopied
     console.log(combinedText)
     setTextToCopy(combinedText);
     hallelujahSound.play();
@@ -108,8 +122,8 @@ function App() {
     <>
       <div className="header-Container">
         <h1 className="title neonText">e-<span className="redNeon neon-flicker">TAHI</span> Report</h1>
-        <small className='versionNo'>v.2.1.3</small>
-        <p className="warning">⚠️留意不複製到任務報到後的公告⚠️</p>
+        <small className='versionNo'>最後更新: 2024/7/3</small>
+        <p className="warning">⚠️留意不要複製到任務之後的公告⚠️</p>
         <div className='datePicker-container'>
           <DatePicker 
             showIcon
@@ -149,17 +163,9 @@ function App() {
 
       <fieldset className='additionalRemarks-Container'>
         <legend>其他</legend>
-        <div>
+        <div id="textAreaData">
           <h2>三、其他：</h2>
-          <textarea
-            id="textAreaData"
-            className="additionalRemark-input" 
-            placeholder='無。' 
-            name="addtionalRemark"
-            value={additionalRemark} 
-            onChange={(event) => setAdditionalRemark(event.target.value)} 
-          >
-          </textarea>
+          {filteredRemarks.length < 1 ? <li>1. 無。</li> : filteredRemarks}
         </div>
       </fieldset>
 

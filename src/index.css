@@ -82,6 +82,10 @@ h2 {
 
 .warning {
   letter-spacing: 0.3rem;
+  color: #ffffff;
+  text-shadow:
+    0 0 5px #ffffff,
+    0 0 40px #ffffff;
 }
 
 .datePicker-container {
