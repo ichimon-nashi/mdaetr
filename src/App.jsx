@@ -27,9 +27,10 @@ function App() {
     const bulletinDataToBeCopied = document.querySelector("#bulletinData").innerHTML
       .replaceAll(/(<h2>|<\/h2>|<\/li>)/g,"")
       .replaceAll(/(<li>)/g,"\r\n");
-      const additionalRemarkToBeCopied = document.querySelector("#textAreaData").innerHTML
+    const additionalRemarkToBeCopied = document.querySelector("#textAreaData").innerHTML
       .replaceAll(/(<h2>|<\/h2>|<\/li>)/g,"")
       .replaceAll(/(<li>)/g,"\r\n");
+    // const combinedText = ccomDataToBeCopied + "\n\n" + "二、公告抽問合格，摘要如下:" + bulletinDataToBeCopied + "\n\n" + additionalRemarkToBeCopied
     const combinedText = ccomDataToBeCopied + "\n\n" + bulletinDataToBeCopied + "\n\n" + additionalRemarkToBeCopied
     setTextToCopy(combinedText);
   },[startDate, noOfBulletin, additionalRemark])
@@ -78,6 +79,15 @@ function App() {
     return <p>{randomCCOMQuestion}</p>;
   }
 
+  const bulletinTimeStamp = bulletinData
+  .filter(criteria => moment(criteria.date).isSameOrBefore(startDate))
+  .slice(-noOfBulletin) //No of bulletin displayed based on input
+  .map((item) => {
+    return (
+      <li key={`id${item.id}${item.date}${item.time}`}>{`${item.date} : ${item.time}`}</li>
+    )
+  });
+
   const newestBulletin = bulletinData
     .filter(criteria => moment(criteria.date).isSameOrBefore(startDate))
     .slice(-noOfBulletin) //No of bulletin displayed based on input
@@ -98,7 +108,6 @@ function App() {
       )
     })
 
-
   const handleCopyButton = () => {
     setCopyStatus(true);
     setTimeout(() => setCopyStatus(false), 3000); // Reset status after 3 seconds
@@ -112,6 +121,7 @@ function App() {
     const additionalRemarkToBeCopied = document.querySelector("#textAreaData").innerHTML
       .replaceAll(/(<h2>|<\/h2>|<\/li>)/g,"")
       .replaceAll(/(<li>)/g,"\r\n");
+    // const combinedText = ccomDataToBeCopied + "\n\n" + "二、公告抽問合格，摘要如下:" + bulletinDataToBeCopied + "\n\n" + additionalRemarkToBeCopied
     const combinedText = ccomDataToBeCopied + "\n\n" + bulletinDataToBeCopied + "\n\n" + additionalRemarkToBeCopied
     console.log(combinedText)
     setTextToCopy(combinedText);
@@ -122,7 +132,7 @@ function App() {
     <>
       <div className="header-Container">
         <h1 className="title neonText">e-<span className="redNeon neon-flicker">TAHI</span> Report</h1>
-        <small className='versionNo'>最後更新: 2024/7/3</small>
+        <small className='versionNo'>最後更新: 2024/7/11</small>
         <p className="warning">⚠️留意不要複製到任務之後的公告⚠️</p>
         <div className='datePicker-container'>
           <DatePicker 
@@ -155,9 +165,20 @@ function App() {
             onChange={(event) => setNoOfBulletin(event.target.value)}
           />
         </label>
+        {/* <div>
+          <h2>二、公告抽問合格，摘要如下:</h2>
+          <div className="bulletinData-container">
+            <div className="leftColumn">
+              {bulletinTimeStamp}
+            </div>
+            <div id="bulletinData" className="rightColumn">
+              {newestBulletin}
+            </div>
+          </div>
+        </div> */}
         <div id="bulletinData">
           <h2>二、公告抽問合格，摘要如下:</h2>
-          {newestBulletin}
+              {newestBulletin}
         </div>
       </fieldset>
 
