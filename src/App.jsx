@@ -132,7 +132,7 @@ function App() {
     <>
       <div className="header-Container">
         <h1 className="title neonText">e-<span className="redNeon neon-flicker">TAHI</span> Report</h1>
-        <small className='versionNo'>最後更新: 2024/7/11</small>
+        <small className='versionNo'>最後更新: 2024/7/29</small>
         <p className="warning">⚠️留意不要複製到任務之後的公告⚠️</p>
         <div className='datePicker-container'>
           <DatePicker 
