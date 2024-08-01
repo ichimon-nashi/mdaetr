@@ -132,7 +132,7 @@ function App() {
     <>
       <div className="header-Container">
         <h1 className="title neonText">e-<span className="redNeon neon-flicker">TAHI</span> Report</h1>
-        <small className='versionNo'>最後更新: 2024/7/29</small>
+        <small className='versionNo'>最後更新: {bulletinData[bulletinData.length - 1].date > additionalRemarkData[additionalRemarkData.length-1].date ? moment(bulletinData[bulletinData.length - 1].date).format("YYYY-MM-DD") : moment(additionalRemarkData[additionalRemarkData.length - 1].date).format("YYYY-MM-DD")}</small>
         <p className="warning">⚠️留意不要複製到任務之後的公告⚠️</p>
         <div className='datePicker-container'>
           <DatePicker 
