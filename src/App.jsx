@@ -39,7 +39,7 @@ function App() {
     const randomCCOMQuestion = [];
     for (let i=0; i<ccomData.length; i++) {
       if ((formattedMonth >= ccomData[i]["startDate"]) && (formattedMonth <= ccomData[i]["endDate"])) {
-        if ((ccomData[i]["chapter"] === "6") || (ccomData[i]["chapter"] === "12")) {
+        if (ccomData[i]["chapter"] === "12") {
           switch(dayOfWeek) {
             case "Monday":
               console.log(dayOfWeek)
